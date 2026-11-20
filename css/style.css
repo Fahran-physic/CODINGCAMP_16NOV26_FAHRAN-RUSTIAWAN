@@ -1,0 +1,568 @@
+/* ============================================================
+   TO-DO LIST LIFE DASHBOARD — style.css
+   Tahap 2: Styling dasar, tema, dan responsivitas
+   ============================================================ */
+
+/* ============================================================
+   1. CSS VARIABLES — Mengatur warna tema
+   Light theme = default, Dark theme lewat class "dark" di body
+   ============================================================ */
+:root {
+  /* Warna untuk tema terang (default) */
+  --bg-page: #f0f4f8;          /* background halaman */
+  --bg-card: #ffffff;           /* background card */
+  --bg-input: #ffffff;          /* background input */
+  --text-primary: #1e293b;      /* teks utama */
+  --text-secondary: #64748b;    /* teks sekunder / keterangan */
+  --text-muted: #94a3b8;        /* teks redup (pesan kosong) */
+  --border-color: #e2e8f0;      /* garis pembatas */
+  --accent: #4f46e5;            /* warna aksen (indigo) */
+  --accent-hover: #4338ca;      /* aksen saat hover */
+  --accent-light: #eef2ff;      /* aksen lembut */
+  --success: #16a34a;           /* hijau (selesai) */
+  --danger: #dc2626;            /* merah (hapus/stop) */
+  --warning: #ea580c;           /* oranye (reset) */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --radius-card: 16px;          /* sudut halus card */
+  --radius-input: 8px;          /* sudut input */
+  --radius-btn: 8px;            /* sudut tombol */
+}
+
+/* Override variabel saat body punya class "dark" */
+body.dark {
+  --bg-page: #0f172a;
+  --bg-card: #1e293b;
+  --bg-input: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --border-color: #334155;
+  --accent: #818cf8;
+  --accent-hover: #a5b4fc;
+  --accent-light: #312e81;
+  --success: #4ade80;
+  --danger: #f87171;
+  --warning: #fb923c;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   2. RESET DASAR — Merapikan margin & padding bawaan browser
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   3. BODY & TIPOGRAFI — Font dan latar halaman
+   ============================================================ */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Padding agar konten tidak menempel di tepi layar */
+  padding: 20px;
+}
+
+/* ============================================================
+   4. TOMBOL TOGGLE TEMA — Posisi kanan atas
+   ============================================================ */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  background-color: var(--accent);
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: var(--radius-btn);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+body.dark .theme-toggle {
+  color: #0f172a;
+}
+
+/* ============================================================
+   5. HEADER — Greeting, jam, dan tanggal
+   Hierarki: greeting (besar) > jam (besar tebal) > tanggal (kecil)
+   ============================================================ */
+.dashboard-header {
+  text-align: center;
+  padding: 40px 20px 30px;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.greeting {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.clock {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 2px;
+  /* Font monospace agar angka jam tidak "lompat" saat lebarnya berubah */
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 6px;
+}
+
+.date {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ============================================================
+   6. LAYOUT UTAMA — Grid untuk menata card-card
+   ============================================================ */
+.dashboard-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  /* Grid dengan kolom yang menyesuaikan layar */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* ============================================================
+   7. CARD — Gaya kotak untuk setiap section
+   ============================================================ */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent-light);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ============================================================
+   8. TOMBOL — Gaya konsisten untuk semua tombol
+   ============================================================ */
+.btn {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease,
+    opacity 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Tombol aksen (Tambah, Simpan) */
+.btn-add,
+.btn-save {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.btn-add:hover,
+.btn-save:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Tombol hijau (Start) */
+.btn-start {
+  background-color: var(--success);
+  color: #ffffff;
+}
+
+.btn-start:hover {
+  background-color: #15803d;
+}
+
+/* Tombol merah (Stop) */
+.btn-stop {
+  background-color: var(--danger);
+  color: #ffffff;
+}
+
+.btn-stop:hover {
+  background-color: #b91c1c;
+}
+
+/* Tombol oranye (Reset) */
+.btn-reset {
+  background-color: var(--warning);
+  color: #ffffff;
+}
+
+.btn-reset:hover {
+  background-color: #c2410c;
+}
+
+/* ============================================================
+   9. INPUT & FORM — Gaya seragam untuk semua kolom isian
+   ============================================================ */
+input[type="text"],
+input[type="url"] {
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-input);
+  padding: 10px 14px;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Efek fokus saat input diklik */
+input[type="text"]:focus,
+input[type="url"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+/* Placeholder (teks abu-abu di dalam input kosong) */
+input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   10. FOCUS TIMER — Tampilan khusus section timer
+   ============================================================ */
+.timer-display {
+  font-size: 4rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 4px;
+  margin-bottom: 24px;
+  padding: 20px 0;
+  background-color: var(--accent-light);
+  border-radius: var(--radius-card);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   11. TO-DO LIST — Form dan daftar tugas
+   ============================================================ */
+.todo-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Input tugas mengisi ruang yang tersisa */
+.todo-form .todo-input {
+  flex: 1;
+}
+
+.todo-form .btn-add {
+  white-space: nowrap;
+}
+
+/* Hilangkan bullet point dari daftar */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Setiap item tugas (akan dibuat oleh JavaScript) */
+.todo-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-input);
+  transition: border-color 0.2s ease, background-color 0.3s ease;
+}
+
+.todo-list li:hover {
+  border-color: var(--accent);
+}
+
+/* Teks tugas mengisi ruang tersisa */
+.todo-list li .task-text {
+  flex: 1;
+  color: var(--text-primary);
+  overflow-wrap: break-word;
+}
+
+/* Tugas yang sudah selesai diberi coret + warna redup */
+.todo-list li.completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Tombol aksi di dalam item tugas */
+.todo-list li .btn-edit,
+.todo-list li .btn-delete,
+.todo-list li .btn-toggle {
+  font-size: 0.85rem;
+  padding: 6px 12px;
+}
+
+.todo-list li .btn-toggle {
+  background-color: var(--success);
+  color: #ffffff;
+}
+
+.todo-list li .btn-edit {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.todo-list li .btn-delete {
+  background-color: var(--danger);
+  color: #ffffff;
+}
+
+/* Pesan saat daftar kosong */
+.todo-empty,
+.links-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 20px 10px;
+}
+
+/* ============================================================
+   12. QUICK LINKS — Form dan daftar link
+   ============================================================ */
+.link-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.link-form .link-input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.link-form .btn-add {
+  white-space: nowrap;
+}
+
+.link-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Setiap item link (akan dibuat oleh JavaScript) */
+.link-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-input);
+  transition: border-color 0.2s ease, background-color 0.3s ease;
+}
+
+.link-list li:hover {
+  border-color: var(--accent);
+}
+
+/* Tautan link */
+.link-list li a {
+  flex: 1;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  overflow-wrap: break-word;
+}
+
+.link-list li a:hover {
+  text-decoration: underline;
+}
+
+.link-list li .btn-delete {
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  background-color: var(--danger);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+}
+
+/* ============================================================
+   13. SETTINGS — Pengaturan nama
+   ============================================================ */
+.name-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.name-input {
+  margin-bottom: 14px;
+}
+
+#save-name-btn {
+  width: 100%;
+}
+
+/* ============================================================
+   14. FOOTER
+   ============================================================ */
+.dashboard-footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  max-width: 1100px;
+  margin: 30px auto 0;
+}
+
+/* ============================================================
+   15. RESPONSIVE — Media queries untuk tablet & HP
+   ============================================================ */
+
+/* ---- Tablet (lebar 640px ke atas) ---- */
+@media (min-width: 640px) {
+  /* Form link jadi 2 kolom + tombol di bawah */
+  .link-form {
+    flex-wrap: nowrap;
+  }
+
+  /* Tombol simpan nama jadi lebar penuh tetap */
+  #save-name-btn {
+    width: auto;
+  }
+}
+
+/* ---- Laptop / Desktop (lebar 900px ke atas) ---- */
+@media (min-width: 900px) {
+  /* Grid 2 kolom: Timer + To-Do di kiri, Links + Settings di kanan */
+  .dashboard-main {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Header lebih lega di layar lebar */
+  .dashboard-header {
+    padding: 50px 20px 40px;
+  }
+
+  .greeting {
+    font-size: 2.2rem;
+  }
+
+  .clock {
+    font-size: 4.5rem;
+  }
+}
+
+/* ---- Layar besar (lebar 1200px ke atas) ---- */
+@media (min-width: 1200px) {
+  .dashboard-main {
+    max-width: 1100px;
+  }
+}
+
+/* ---- HP kecil (lebar maksimal 380px) ---- */
+@media (max-width: 380px) {
+  body {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .clock {
+    font-size: 2.8rem;
+  }
+
+  .timer-display {
+    font-size: 3rem;
+  }
+
+  /* Tombol timer menumpuk vertikal di layar sempit */
+  .timer-controls {
+    flex-direction: column;
+  }
+
+  .timer-controls .btn {
+    width: 100%;
+  }
+
+  /* Form to-do jadi vertikal */
+  .todo-form {
+    flex-direction: column;
+  }
+
+  .todo-form .btn-add {
+    width: 100%;
+  }
+
+  /* Form link jadi vertikal di layar sempit */
+  .link-form {
+    flex-direction: column;
+  }
+
+  .link-form .link-input,
+  .link-form .btn-add {
+    width: 100%;
+  }
+}

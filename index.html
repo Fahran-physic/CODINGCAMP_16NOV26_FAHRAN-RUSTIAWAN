@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- Pengaturan dasar halaman -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List Life Dashboard</title>
+
+  <!-- Hubungkan file CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <!-- Tombol untuk ganti tema Light/Dark (fitur tambahan) -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Ganti tema">
+    Dark Mode
+  </button>
+
+  <!-- ===== HEADER: Jam, tanggal, dan greeting ===== -->
+  <header class="dashboard-header">
+    <h1 id="greeting" class="greeting">Halo!</h1>
+    <p id="clock" class="clock">00:00:00</p>
+    <p id="date" class="date">Senin, 1 Januari 2024</p>
+  </header>
+
+  <main class="dashboard-main">
+
+    <!-- ===== SECTION 1: Focus Timer (Pomodoro 25 menit) ===== -->
+    <section id="timer-section" class="card">
+      <h2 class="section-title">Focus Timer</h2>
+      <p id="timer-display" class="timer-display">25:00</p>
+
+      <div class="timer-controls">
+        <button id="start-btn" class="btn btn-start">Start</button>
+        <button id="stop-btn" class="btn btn-stop">Stop</button>
+        <button id="reset-btn" class="btn btn-reset">Reset</button>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: To-Do List ===== -->
+    <section id="todo-section" class="card">
+      <h2 class="section-title">To-Do List</h2>
+
+      <!-- Form untuk menambah tugas -->
+      <form id="todo-form" class="todo-form">
+        <input
+          type="text"
+          id="todo-input"
+          class="todo-input"
+          placeholder="Tulis tugas baru..."
+          autocomplete="off"
+        />
+        <button type="submit" class="btn btn-add">Tambah</button>
+      </form>
+
+      <!-- Daftar tugas akan dirender di sini oleh JavaScript -->
+      <ul id="todo-list" class="todo-list"></ul>
+
+      <!-- Pesan jika daftar kosong (akan diatur via JavaScript nanti) -->
+      <p id="todo-empty" class="todo-empty">Belum ada tugas. Tambahkan tugas pertamamu!</p>
+    </section>
+
+    <!-- ===== SECTION 3: Quick Links (website favorit) ===== -->
+    <section id="links-section" class="card">
+      <h2 class="section-title">Quick Links</h2>
+
+      <!-- Form untuk menambah link -->
+      <form id="link-form" class="link-form">
+        <input
+          type="text"
+          id="link-name"
+          class="link-input"
+          placeholder="Nama (contoh: Google)"
+          autocomplete="off"
+        />
+        <input
+          type="url"
+          id="link-url"
+          class="link-input"
+          placeholder="https://..."
+          autocomplete="off"
+        />
+        <button type="submit" class="btn btn-add">Tambah Link</button>
+      </form>
+
+      <!-- Daftar link akan dirender di sini oleh JavaScript -->
+      <ul id="link-list" class="link-list"></ul>
+
+      <p id="links-empty" class="links-empty">Belum ada link tersimpan.</p>
+    </section>
+
+    <!-- ===== SECTION 4: Pengaturan Nama (fitur Custom Name) ===== -->
+    <section id="settings-section" class="card">
+      <h2 class="section-title">Pengaturan</h2>
+      <label for="name-input" class="name-label">Nama kamu:</label>
+      <input
+        type="text"
+        id="name-input"
+        class="name-input"
+        placeholder="Masukkan nama..."
+        autocomplete="off"
+      />
+      <button id="save-name-btn" class="btn btn-save">Simpan Nama</button>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="dashboard-footer">
+    <p>To-Do List Life Dashboard &middot; Mini Course Software Engineering</p>
+  </footer>
+
+  <!-- Hubungkan file JavaScript (diletakkan di akhir body agar HTML selesai dimuat dulu) -->
+  <script src="js/script.js"></script>
+</body>
+</html>
